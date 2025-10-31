@@ -1,3 +1,8 @@
+import * as readline from "readline/promises";
+import Stream from "stream";
+
+
+
 export function cleanInput(input:string):string[]{
     const pokemonArr = input.split(" ");
     let cleanArr = [];
@@ -7,4 +12,20 @@ export function cleanInput(input:string):string[]{
         }
     }
     return cleanArr;
+}
+
+export function startREPL(){
+    const rl = readline.createInterface({input: process.stdin,output: process.stdout,prompt: "Pokedex > "});
+    rl.prompt();
+    rl.on("line",(input) => {
+        const cInput=cleanInput(input);
+        if(cInput.length === 0){
+            rl.prompt();
+        }
+        else{
+            console.log(`Your command was: ${cInput[0]}`);
+        }
+    rl.prompt()   
+    
+    })
 }
