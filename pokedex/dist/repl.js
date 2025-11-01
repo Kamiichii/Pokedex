@@ -1,4 +1,3 @@
-import * as readline from "readline/promises";
 export function cleanInput(input) {
     const pokemonArr = input.split(" ");
     let cleanArr = [];
@@ -9,17 +8,23 @@ export function cleanInput(input) {
     }
     return cleanArr;
 }
-export function startREPL() {
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "Pokedex > " });
+export function startREPL(currentState) {
+    const rl = currentState.interface;
     rl.prompt();
     rl.on("line", (input) => {
-        const cInput = cleanInput(input);
-        if (cInput.length === 0) {
-            rl.prompt();
+        const nInput = cleanInput(input)[0];
+        const commandObj = currentState.commands;
+        try {
+            if (nInput in commandObj) {
+                commandObj[nInput].callback(currentState);
+            }
+            else {
+                console.log("Unknown command");
+            }
         }
-        else {
-            console.log(`Your command was: ${cInput[0]}`);
+        catch (err) {
+            console.log(err);
         }
-        rl.prompt();
+        ;
     });
 }

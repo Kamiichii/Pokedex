@@ -1,5 +1,6 @@
-import * as readline from "readline/promises";
-import Stream from "stream";
+
+import { State } from "./state.js";
+
 
 
 
@@ -14,18 +15,21 @@ export function cleanInput(input:string):string[]{
     return cleanArr;
 }
 
-export function startREPL(){
-    const rl = readline.createInterface({input: process.stdin,output: process.stdout,prompt: "Pokedex > "});
+export function startREPL(currentState:State){
+    const rl = currentState.interface;
     rl.prompt();
-    rl.on("line",(input) => {
-        const cInput=cleanInput(input);
-        if(cInput.length === 0){
-            rl.prompt();
-        }
-        else{
-            console.log(`Your command was: ${cInput[0]}`);
-        }
-    rl.prompt()   
-    
-    })
+    rl.on("line",(input)=>{
+        const nInput = cleanInput(input)[0];
+        const commandObj = currentState.commands
+        try{
+            if(nInput in commandObj){
+                commandObj[nInput].callback(currentState);
+            }
+            else{
+            console.log("Unknown command");
+            }
+        }catch(err){console.log(err)};
+        
+    })    
 }
+
