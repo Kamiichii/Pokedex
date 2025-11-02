@@ -15,21 +15,23 @@ export function cleanInput(input:string):string[]{
     return cleanArr;
 }
 
-export function startREPL(currentState:State){
-    const rl = currentState.interface;
+export async function startREPL(state:State){
+    const rl = state.interface;
     rl.prompt();
-    rl.on("line",(input)=>{
+    rl.on("line",async (input)=>{
         const nInput = cleanInput(input)[0];
-        const commandObj = currentState.commands
+        const commandObj = state.commands
+
         try{
             if(nInput in commandObj){
-                commandObj[nInput].callback(currentState);
+                await commandObj[nInput].callback(state);
             }
             else{
             console.log("Unknown command");
             }
         }catch(err){console.log(err)};
         
-    })    
+       rl.prompt(); 
+    });    
 }
 

@@ -8,15 +8,15 @@ export function cleanInput(input) {
     }
     return cleanArr;
 }
-export function startREPL(currentState) {
-    const rl = currentState.interface;
+export async function startREPL(state) {
+    const rl = state.interface;
     rl.prompt();
-    rl.on("line", (input) => {
+    rl.on("line", async (input) => {
         const nInput = cleanInput(input)[0];
-        const commandObj = currentState.commands;
+        const commandObj = state.commands;
         try {
             if (nInput in commandObj) {
-                commandObj[nInput].callback(currentState);
+                await commandObj[nInput].callback(state);
             }
             else {
                 console.log("Unknown command");
@@ -26,5 +26,6 @@ export function startREPL(currentState) {
             console.log(err);
         }
         ;
+        rl.prompt();
     });
 }
