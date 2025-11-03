@@ -7,7 +7,7 @@ export function initState() {
     return {
         interface: readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "Pokedex > " }),
         commands: getCommands(),
-        PokeAPI: new PokeAPI(),
+        PokeAPI: new PokeAPI(1000),
         nextLocationsURL: null,
         previousLocationsURL: null,
     };
