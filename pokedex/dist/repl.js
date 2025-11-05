@@ -12,11 +12,11 @@ export async function startREPL(state) {
     const rl = state.interface;
     rl.prompt();
     rl.on("line", async (input) => {
-        const nInput = cleanInput(input)[0];
-        const commandObj = state.commands;
+        const cInput = cleanInput(input);
+        const [cmd, ...args] = cInput;
         try {
-            if (nInput in commandObj) {
-                await commandObj[nInput].callback(state);
+            if (cmd in state.commands) {
+                await state.commands[cmd].callback(state, ...args);
             }
             else {
                 console.log("Unknown command");

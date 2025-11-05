@@ -16,6 +16,8 @@ test.concurrent.each([
     cache.add(key, val);
     const cached = cache.get(key);
     expect(cached).toBe(val);
+    const undefined_exp = cache.get('zimbabbaybee');
+    expect(undefined_exp).toBe(undefined);
     await new Promise((resolve) => setTimeout(resolve, interval + 100));
     const reaped = cache.get(key);
     expect(reaped).toBe(undefined);

@@ -1,4 +1,4 @@
-import { stat } from "fs";
+
 import { CLICommand, State } from "./state.js";
 
 

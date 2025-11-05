@@ -22,14 +22,18 @@ export class PokeAPI {
         return pokeAPIJson;
     }
     async fetchLocation(locationName) {
+        const key = `location-area:${locationName}`;
+        const cachedData = this.#myCache.get(key);
+        if (cachedData) {
+            return cachedData;
+        }
         const full_url = `${PokeAPI.baseURL}/location-area/${locationName}/`;
         const res = await fetch(full_url);
         if (!res.ok)
             throw new Error(`HTTP ${res.status}`);
         const pokeAPIJson = await res.json();
-        return { id: pokeAPIJson.id,
-            name: pokeAPIJson.name
-        };
+        this.#myCache.add(key, pokeAPIJson);
+        return pokeAPIJson;
     }
     ;
 }

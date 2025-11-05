@@ -3,6 +3,7 @@ import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
 import { PokeAPI } from "./pokeapi.js";
 import { commandMap, commandMapb } from "./command_map.js";
+import { commandExplore } from "./command_explore.js";
 export function initState() {
     return {
         interface: readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "Pokedex > " }),
@@ -33,6 +34,11 @@ export function getCommands() {
             name: "mapb",
             description: "Prints the previous 20 location areas",
             callback: commandMapb,
+        },
+        explore: {
+            name: "explore",
+            description: "Explores the given area",
+            callback: commandExplore,
         }
     };
 }
