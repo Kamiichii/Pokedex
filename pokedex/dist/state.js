@@ -4,6 +4,7 @@ import { commandHelp } from "./command_help.js";
 import { PokeAPI } from "./pokeapi.js";
 import { commandMap, commandMapb } from "./command_map.js";
 import { commandExplore } from "./command_explore.js";
+import { commandCatch } from "./command_catch.js";
 export function initState() {
     return {
         interface: readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "Pokedex > " }),
@@ -11,6 +12,7 @@ export function initState() {
         PokeAPI: new PokeAPI(1000),
         nextLocationsURL: null,
         previousLocationsURL: null,
+        pokedex: {},
     };
 }
 export function getCommands() {
@@ -39,6 +41,11 @@ export function getCommands() {
             name: "explore",
             description: "Explores the given area",
             callback: commandExplore,
+        },
+        catch: {
+            name: "catch",
+            description: "Catches the given pokemon",
+            callback: commandCatch,
         }
     };
 }

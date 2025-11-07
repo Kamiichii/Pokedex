@@ -36,4 +36,18 @@ export class PokeAPI {
         return pokeAPIJson;
     }
     ;
+    async fetchPokemon(pokemonName) {
+        const key = `PokemonName:${pokemonName}`;
+        const cachedData = this.#myCache.get(key);
+        if (cachedData) {
+            return cachedData;
+        }
+        const full_url = `${PokeAPI.baseURL}/pokemon/${pokemonName}/`;
+        const res = await fetch(full_url);
+        if (!res.ok)
+            throw new Error(`HTTP ${res.status}`);
+        const pokeAPIJson = await res.json();
+        this.#myCache.add(key, pokeAPIJson);
+        return pokeAPIJson;
+    }
 }
