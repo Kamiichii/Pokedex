@@ -5,6 +5,8 @@ import { PokeAPI } from "./pokeapi.js";
 import { commandMap, commandMapb } from "./command_map.js";
 import { commandExplore } from "./command_explore.js";
 import { commandCatch } from "./command_catch.js";
+import { commandInspect } from "./command_inspect.js";
+import { commandPokedex } from "./command_pokedex.js";
 export function initState() {
     return {
         interface: readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "Pokedex > " }),
@@ -46,6 +48,16 @@ export function getCommands() {
             name: "catch",
             description: "Catches the given pokemon",
             callback: commandCatch,
+        },
+        inspect: {
+            name: "inspect",
+            description: "Inspects a pokemon from your pokedex",
+            callback: commandInspect,
+        },
+        pokedex: {
+            name: "pokedex",
+            description: "Prints the pokemons in your pokedex",
+            callback: commandPokedex,
         }
     };
 }
